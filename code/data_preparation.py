@@ -12,17 +12,29 @@ Each support function should have an informative name and return the partially c
 """
 import pandas as pd
 
-def support_function_one(example):
-    """This one might read in the data from imdb and clean it"""
-    return example
+def prep_imdb(imdb):
+    """This finction reads in the data from imdb and clean it"""
+    imdb.columns = imdb.columns.str.lower().str.replace(' ', '_')
+    imdb.drop(columns = ['movie_id', 'runtime_minutes','original_title'], inplace=True)
+    imdb.rename({'primary_title':'title'}, axis=1, inplace=True)
+    imdb['title'] = imdb['title'].str.title()
+    imdb.rename({'start_year':'year'},axis=1, inplace=True)
+    return imdb
 
-def support_function_two(example):
+def prep_bom(bom):
     """This function might read in and clean a different data source"""
-    return example
+    bom.columns = bom.columns.str.lower().str.replace(' ', '_')
+    bom.drop(columns = ['studio'], inplace = True)
+    bom['title'] = bom['title'].str.title()
+    return bom
 
-def support_function_three(example):
+def merge_imdb_bom(imdb_df, bom_df):
     """This one might merge the above two sources and create a few new variables"""
-    return example
+    df = pd.merge(imdb_df, bom_df, on=['title', 'year'])
+    df.dropna(subset= ['domestic_gross','foreign_gross'], inplace=True)
+    df['total_gross'] = df['domestic_gross'].astype(float) + df['foreign_gross'].str.replace(',', '').astype(float)
+
+    return df
 
 def full_clean():
     """
@@ -34,10 +46,10 @@ def full_clean():
 
     :return: cleaned dataset to be passed to hypothesis testing and visualization modules.
     """
-    dirty_data = pd.read_csv("./data/dirty_data.csv")
+    imdb_dirty = pd.read_csv("./data/dirty_data.csv")
 
-    cleaning_data1 = support_function_one(dirty_data)
-    cleaning_data2 = support_function_two(cleaning_data1)
+    imdb_clean = prep_imdb(imdb_dirty)
+    bom_clean = prep_bom(bom_dirty)
     cleaned_data= support_function_three(cleaning_data2)
     cleaned_data.to_csv('./data/cleaned_for_testing.csv')
     
