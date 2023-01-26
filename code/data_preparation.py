@@ -11,6 +11,7 @@ There can be an unlimited amount of support functions.
 Each support function should have an informative name and return the partially cleaned bit of the dataset.
 """
 import pandas as pd
+import os 
 
 def prep_imdb(imdb):
     """This finction reads in the data from imdb and clean it"""
@@ -33,10 +34,11 @@ def merge_imdb_bom(imdb_df, bom_df):
     df = pd.merge(imdb_df, bom_df, on=['title', 'year'])
     df.dropna(subset= ['domestic_gross','foreign_gross'], inplace=True)
     df['total_gross'] = df['domestic_gross'].astype(float) + df['foreign_gross'].str.replace(',', '').astype(float)
-
+    df.sort_values(by=['total_gross'], inplace=True)
+    df.reset_index(drop=True, inplace=True)
     return df
 
-def full_clean():
+def full_clean(imdb, bom):
     """
     This is the one function called that will run all the support functions.
     Assumption: 
@@ -46,11 +48,10 @@ def full_clean():
 
     :return: cleaned dataset to be passed to hypothesis testing and visualization modules.
     """
-    imdb_dirty = pd.read_csv("./data/dirty_data.csv")
-
-    imdb_clean = prep_imdb(imdb_dirty)
-    bom_clean = prep_bom(bom_dirty)
-    cleaned_data= support_function_three(cleaning_data2)
-    cleaned_data.to_csv('./data/cleaned_for_testing.csv')
+    imdb_clean = prep_imdb(imdb)
+    bom_clean = prep_bom(bom)
+    cleaned_data= merge_imdb_bom(imdb_clean, bom_clean)
+    os.mkdir('data')
+    cleaned_data.to_csv('./data/cleaned_dataset.csv')
     
     return cleaned_data
