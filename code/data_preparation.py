@@ -32,10 +32,13 @@ def prep_bom(bom):
 def merge_imdb_bom(imdb_df, bom_df):
     """This one might merge the above two sources and create a few new variables"""
     df = pd.merge(imdb_df, bom_df, on=['title', 'year'])
-    df.dropna(subset= ['domestic_gross','foreign_gross'], inplace=True)
+    df.dropna(subset= ['domestic_gross','foreign_gross','genres'], inplace=True)
     df['total_gross'] = df['domestic_gross'].astype(float) + df['foreign_gross'].str.replace(',', '').astype(float)
-    df.sort_values(by=['total_gross'], inplace=True)
+    df.sort_values(by=['total_gross'], inplace=True, ascending=False)
     df.reset_index(drop=True, inplace=True)
+    df['main_genre'] = df['genres'].apply(lambda x: x[0]*True if len(x)>=1 else x[0]*False)
+    df['secondary_genre'] = df['genres'].apply(lambda x: x[1]*True if len(x)>1 else x[0]*False)
+    df['tertiary_genre'] = df['genres'].apply(lambda x: x[2]*True if len(x)>2 else x[0]*False)
     return df
 
 def full_clean(imdb, bom):
