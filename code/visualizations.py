@@ -5,15 +5,13 @@ A framework for each type of visualization is provided.
 """
 # visualization packages
 import matplotlib.pyplot as plt
-from matplotlib.axes._axes import _log as matplotlib_axes_logger
-from matplotlib.ticker import FuncFormatter
+import matplotlib.ticker as ticker
 import seaborn as sns
 
 # Standard data manipulation packages
 import pandas as pd
 import numpy as np
 
-matplotlib_axes_logger.setLevel('ERROR')
 
 # Set specific parameters for the visualizations
 large = 22; med = 16; small = 12
@@ -29,48 +27,74 @@ plt.style.use('seaborn-whitegrid')
 sns.set_style("white")
 
 
-def sample_plot_1():
-    """
-    This is a sample visualization function to show what one looks like.
-    The code is borrowed from https://www.machinelearningplus.com/plots/top-50-matplotlib-visualizations-the-master-plots-python/
+def genre_vs_income(clean_df):
+    genre_vs_rating = clean_df[['averagerating','genre0']]
 
-    This function takes no arguments and shows a nice visualization without having all your code in the notebook itself.
-    """
-
-    # Set size of figure
-    fig = plt.figure(figsize=(16, 10), dpi=80)  
-
-
-    # Import dataset 
-    midwest = pd.read_csv("https://raw.githubusercontent.com/selva86/datasets/master/midwest_filter.csv")
-
-    # Prepare Data 
-    # Create as many colors as there are unique midwest['category']
-    categories = np.unique(midwest['category'])
-    colors = [plt.cm.tab10(i/float(len(categories)-1)) for i in range(len(categories))]
-
-    # create ax element
-    fig, ax = plt.subplots(figsize=(16, 10), dpi= 80, facecolor='w', edgecolor='k')
-
-    # Draw Plot for Each Category
-    for i, category in enumerate(categories):
-        plt.scatter('area', 'poptotal', 
-                    data=midwest.loc[midwest.category==category, :], 
-                    s=20, c=colors[i], label=str(category))
-
-    # Decorations
-    plt.gca().set(xlim=(0.0, 0.1), ylim=(0, 90000),
-                  xlabel='Area', ylabel='Population')
-
-    plt.xticks(fontsize=12); plt.yticks(fontsize=12)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
-
-    plt.title("Scatterplot of Midwest Area vs Population", fontsize=22)
+    ax = genre_vs_rating.groupby('genre0').median().plot(kind='bar', figsize=(10,6), fontsize=13, stacked=True, 
+                                                    color = ['royalblue'])
+    ax.set_xlabel('Genre of the movie', fontsize = 15)
+    ax.set_ylabel("Average rating", fontsize=15);
+    ax.set_title("Average rating by movie type", fontsize=22)
+    plt.xticks(rotation = 50)
     plt.legend(fontsize=12)
-    plt.savefig('./images/viz1.png', transparent = True)
-    
-    plt.show()  
-    
+    plt.savefig('./images/genre_vs_rating.png', transparent = True)   
+    plt.show()
+    pass
+
+def genre_vs_rating(clean_df):
+    genre_vs_gross = clean_df[['domestic_gross','foreign_gross','genre0']]
+
+    ax = genre_vs_gross.groupby('genre0').median().plot(kind='bar', figsize=(10,6), fontsize=13, stacked=True, 
+                                                    color = ['lightcoral','royalblue'])
+    ax.set_xlabel('Genre of the movie', fontsize = 15)
+    ax.set_ylabel("Income [$]", fontsize=15);
+    ax.set_title("Gross income by movie type", fontsize=22)
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(50000000.00))
+    ax.yaxis.set_major_formatter(ticker.EngFormatter())
+    plt.xticks(rotation = 50)
+    plt.legend(fontsize=12)
+    plt.savefig('./images/genre_vs_income.png', transparent = True)   
+    plt.show()
+    pass
+
+
+def income_vs_year(clean_df): 
+    gross_vs_year = clean_df[['domestic_gross','foreign_gross','year']]
+    gross_vs_year['foreign_gross'].replace(',','', regex=True, inplace=True)
+    gross_vs_year['foreign_gross'] = genre_vs_gross['foreign_gross'].astype('float64')
+
+    ax = gross_vs_year.groupby('year').mean().plot(figsize=(10,6), fontsize=13, stacked=True, 
+                                                        color = ['lightcoral','royalblue'])
+    ax.set_xlabel('Year', fontsize = 15)
+    ax.set_ylabel("Income [$]", fontsize=15);
+    ax.set_title("Gross income by year", fontsize=22)
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(20000000.00))
+    ax.yaxis.set_major_formatter(ticker.EngFormatter())
+    plt.xticks(rotation = 50)
+    plt.legend(fontsize=12)
+    plt.grid()
+    plt.savefig('./images/income_vs_year.png', transparent = True)   
+    plt.show()
+    pass
+
+def votes_vs_year(clean_df): 
+    votes_vs_year = clean_df[['numvotes','year']]
+
+    ax = votes_vs_year.groupby('year').mean().plot(figsize=(10,6), fontsize=13, stacked=True, 
+                                                        color = ['lightcoral','royalblue'])
+    ax.set_xlabel('Year', fontsize = 15)
+    ax.set_ylabel("Number of votes", fontsize=15);
+    ax.set_title("Total votes by year", fontsize=22)
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(20000000.00))
+    ax.yaxis.set_major_formatter(ticker.EngFormatter())
+    plt.xticks(rotation = 50)
+    plt.legend(fontsize=12)
+    plt.grid()
+    plt.savefig('./images/votes_vs_year.png', transparent = True)   
+    plt.show()
     pass
 
 def sample_plot2():
