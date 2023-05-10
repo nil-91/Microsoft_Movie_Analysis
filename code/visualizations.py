@@ -34,7 +34,7 @@ def genre_vs_income(clean_df):
                                                          color = ['#894da3','#8c7dba'])
     ax.set_xlabel('Genre of the movie', fontsize = 15)
     ax.set_ylabel("Income [$]", fontsize=15);
-    ax.set_title("Gross income by movie type", fontsize=22)
+    ax.set_title("Gross income by movie type", fontsize=17)
     ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(50000000.00))
     ax.yaxis.set_major_formatter(ticker.EngFormatter())
@@ -49,7 +49,7 @@ def genre_vs_rating(clean_df):
     df = genre_vs_rating.groupby('genre0').agg('median')
     df = df.reset_index()
     
-    fig, ax = plt.subplots(figsize=(15,6))
+    fig, ax = plt.subplots(figsize=(10,6))
     labels = list(df['genre0'].unique())
     sns.barplot(
         x="genre0",

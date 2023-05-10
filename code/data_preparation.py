@@ -54,7 +54,8 @@ def full_clean(imdb, bom):
     imdb_clean = prep_imdb(imdb)
     bom_clean = prep_bom(bom)
     cleaned_data= merge_imdb_bom(imdb_clean, bom_clean)
-    os.mkdir('data')
+    if not os.path.exists('data'):
+        os.mkdir('data')
     cleaned_data.to_csv('./data/cleaned_dataset.csv')
     
     return cleaned_data
