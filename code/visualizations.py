@@ -45,34 +45,60 @@ def genre_vs_income(clean_df):
     pass
 
 def genre_vs_rating(clean_df):
-    genre_vs_rating = clean_df[['averagerating','genre0','numvotes']]
-    df = genre_vs_rating.groupby('genre0').agg('median')
+    genre_vs_rating = clean_df[['genre0', 'averagerating', 'numvotes']]
+    df = genre_vs_rating[['genre0', 'averagerating']].groupby('genre0').agg('mean')
     df = df.reset_index()
+    df.rename(columns={'averagerating':'rating'}, inplace=True)
+    genre_vs_rating = pd.merge(genre_vs_rating,df, on='genre0')
     
-    fig, ax = plt.subplots(figsize=(10,6))
+    fig, ax = plt.subplots(figsize=(25,6), ncols=1)
     labels = list(df['genre0'].unique())
-    sns.barplot(
-        x="genre0",
-        y="averagerating",
-        data=df,
-        hue="numvotes",
-        ax=ax,
-        palette="BuPu_r",
-        dodge=False
+    sns.boxplot(x="genre0",
+                y="averagerating",
+                data=genre_vs_rating,
+                ax=ax,
+                palette="BuPu_r",
+                hue = genre_vs_rating["rating"],
+                dodge=False
     )
-    sns.set_style(
-        "darkgrid")
-    ax.set_title("Average movie rating per category", fontsize=15)
+    ax.set_title("Average movie rating per category", fontsize=17)
     ax.set_xlabel("Movie category", fontsize=15)
     ax.set_ylabel("Average rating", fontsize=15)
     ax.set_xticklabels(labels= labels, size=15, rotation=65)
     ax.tick_params(axis='y', labelsize=15)
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles[::-1], labels[::-1], title="Number of votes",bbox_to_anchor=(1.02, 1.0), loc='upper left', fontsize=12,
-              fancybox=True)
+    ax.legend().remove()
     plt.tight_layout()
     plt.savefig('./images/genre_vs_rating.png', transparent = True)    
 
+    plt.show()
+    pass
+
+def genre_vs_vote(clean_df):
+    genre_vs_numvotes = clean_df[['genre0','numvotes']]
+    df = genre_vs_numvotes.groupby('genre0').agg('mean')
+    df = df.reset_index()
+    fig, ax = plt.subplots(figsize=(10,6))
+    labels = list(df['genre0'].unique())
+    sns.barplot(
+        x="genre0",
+        y="numvotes",
+        data=df,
+        ax=ax,
+        palette='BuPu_r',
+        hue = df["numvotes"].values.astype(int),
+        hue_order = np.sort(df["numvotes"].values.astype(int))[::-1],
+        dodge=False,
+    )
+    ax.set_title("Number of votes per category", fontsize=17)
+    ax.set_xlabel("Movie category", fontsize=15)
+    ax.set_ylabel("Number of votes", fontsize=15)
+    ax.set_xticklabels(labels= labels, size=15, rotation=65)
+    ax.tick_params(axis='y', labelsize=15)
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels, title="Average number of votes",bbox_to_anchor=(1.02, 1.0), loc='upper left', fontsize=12,
+              fancybox=True)
+    plt.tight_layout()
+    plt.savefig('./images/genre_vs_vote.png', transparent = True)    
     plt.show()
     pass
 
@@ -151,29 +177,3 @@ def income_vs_rating(clean_df):
     plt.show()
     pass
 
-
-
-def visualization_one(target_var = None, input_vars= None, output_image_name=None):
-    """
-    The visualization functions are what is used to create each individual image.
-    The function should be repeatable if not generalizable
-    The function will call either the boxplot or density plot functions you wrote above
-
-    :param target_var:
-    :param input_vars:
-    :param output_image_name: the desired name for the image saved
-    :return: outputs a saved png file and returns a fig object for testing
-    """
-    ###
-    # Main chunk of code here
-    ###
-
-    # Starter code for labeling the image
-    plt.xlabel(None, figure = fig)
-    plt.ylabel(None, figure = fig)
-    plt.title(None, figure= fig)
-    plt.legend()
-
-    # exporting the image to the img folder
-    plt.savefig(f'images/{output_image_name}.png', transparent = True, figure = fig)
-    return fig
