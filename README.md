@@ -21,7 +21,7 @@ This project usees descriptive analysis, including description of exsisting movi
 
 ## Results
 
-In terms of profit, the top three main movies geners with highest total gross income are Adventure ($\$$ 282 M), Action ($\$$ 247 M), and Mystery ($\$$ 238 M). 
+In terms of profit, the top three main movies geners with highest total gross income are Adventure ($ 282 M), Action ($ 247 M), and Mystery ($ 238 M). 
 
 ![Gross income vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_income.png)
 
@@ -33,9 +33,9 @@ The top three main movie geners with highest average rating were found to be Mys
 
 ## For More Information
 
-Please review my full analysis in [my Jupyter Notebook](./microsoft_movie_analysis.ipynb) or my [presentation](./microsoft_movie_analysis.pdf).
+Please review my full analysis in [my Jupyter Notebook](./microsoft_movie_analysis.ipynb) or my [Presentation](./microsoft_movie_analysis.pdf).
 
-For any additional questions, please contact Niloufar Saharkhkiz at [email](mailto:niloufar.saharkhiz@gmail.com)
+For any additional questions, please contact Niloufar Saharkhkiz at [niloufar.shkz@gmail.com](mailto:niloufar.shkz@gmail.com)
 
 
 ## Repository Structure
@@ -43,13 +43,13 @@ For any additional questions, please contact Niloufar Saharkhkiz at [email](mail
 ```
 ├── __init__.py                         
 ├── README.md                           
-├── microsoft_movie_analysis.ipynb   <- Narrative documentation of analysis in Jupyter notebook
-├── microsoft_movie_analysis.pdf         <- PDF version of project presentation
+├── microsoft_movie_analysis.ipynb  
+├── microsoft_movie_analysis.pdf        
 ├── code
 │   ├── __init__.py                     
-│   ├── visualizations.py               <- .py script to create finalized versions of visuals for project
-│   ├── data_preparation.py             <- .py script used to pre-process and clean data
-│   └── eda_notebook.ipynb              <- Notebook containing data exploration
+│   ├── visualizations.py               
+│   ├── data_preparation.py            
+│   └── eda_notebook.ipynb             
 ├── data                                
 └── images                              
 ```
