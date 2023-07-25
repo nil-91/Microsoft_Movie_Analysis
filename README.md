@@ -1,3 +1,5 @@
+![director shot](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/director_shot.jpeg)
+
 # Microsoft Movie Analysis
 
 <b> Author: </b> Niloufar Saharkhiz
