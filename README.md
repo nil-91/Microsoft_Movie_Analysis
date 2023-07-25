@@ -23,7 +23,7 @@ This project usees descriptive analysis, including description of exsisting movi
 
 In terms of profit, the top three main movies geners with highest total gross income are Adventure ($\$$ 282 M), Action ($\$$ 247 M), and Mystery ($\$$ 238 M). 
 
-![Gross income vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_income.png
+![Gross income vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_income.png)
 
 Below is a list of the contents of this repository.
 
