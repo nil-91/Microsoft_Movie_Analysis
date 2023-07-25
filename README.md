@@ -25,18 +25,31 @@ In terms of profit, the top three main movies geners with highest total gross in
 
 ![Gross income vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_income.png)
 
-Below is a list of the contents of this repository.
 
-- `README.md`: The README for this repo branch explaining it's contents - you're reading it now
-- `TEMPLATE_README.md`: An example of a project README that provides a brief overview of your whole project
-- `dsc-phase1-project-template.ipynb`: A starter Jupyter Notebook with headings, code examples and guiding questions
-- `DS_Project_Presentation_Template.pdf`: A starter slide deck presenting your project - here is an [editable version](https://docs.google.com/presentation/d/1PaiH1bleXnhiPjTPsAXQSiAK0nkaRlseQIr_Yb-0mz0/copy)
-- `__init__.py`: Python helper file that tells Python that there are packages in the repository that can be imported
-- `zippedData` folder: A folder for the data you reference with your code
-- `images` folder: A folder for the images you reference in your files
-- `code` folder: A folder for the python scripts that your Jupyter Notebook imports
-  - `__init__.py`: Python helper file that tells Python that there are packages in this folder that can be imported
-  - `data_cleaning.py`: Code to prepare data for analysis
-  - `visualizations.py`: Code to produce visualizations
-  - `eda_notebook.ipynb`: Notebook with any messy EDA so the main notebook can be more readable
-- `.gitignore`: A hidden file that tells git to not track certain files and folders
+The top three main movie geners with highest average rating were found to be Mystery, Documentary, and Biography. However, the number of movies with Mystery to be the main genre are lower compared to the other categories and therefore, more investigation on movies with this main genre category are required. The movie generes with the lowest average rating were found to be Adventure, Comedy, and Horor.
+
+![Rating vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_rating.png)
+
+
+## For More Information
+
+Please review my full analysis in [my Jupyter Notebook](./microsoft_movie_analysis.ipynb) or my [presentation](./microsoft_movie_analysis.pdf).
+
+For any additional questions, please contact Niloufar Saharkhkiz at [email](mailto:niloufar.saharkhiz@gmail.com)
+
+
+## Repository Structure
+
+```
+├── __init__.py                         
+├── README.md                           
+├── microsoft_movie_analysis.ipynb   <- Narrative documentation of analysis in Jupyter notebook
+├── microsoft_movie_analysis.pdf         <- PDF version of project presentation
+├── code
+│   ├── __init__.py                     
+│   ├── visualizations.py               <- .py script to create finalized versions of visuals for project
+│   ├── data_preparation.py             <- .py script used to pre-process and clean data
+│   └── eda_notebook.ipynb              <- Notebook containing data exploration
+├── data                                
+└── images                              
+```
