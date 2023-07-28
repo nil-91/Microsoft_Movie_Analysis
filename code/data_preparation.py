@@ -16,10 +16,11 @@ import os
 def prep_imdb(imdb):
     """This finction reads in the data from imdb and clean it"""
     imdb.columns = imdb.columns.str.lower().str.replace(' ', '_')
-    imdb.drop(columns = ['movie_id', 'runtime_minutes','original_title'], inplace=True)
+    imdb.drop(columns = ['movie_id','original_title'], inplace=True)
     imdb.rename({'primary_title':'title'}, axis=1, inplace=True)
     imdb['title'] = imdb['title'].str.title()
     imdb.rename({'start_year':'year'},axis=1, inplace=True)
+    imdb.rename({'runtime_minutes':'runtime[min]'},axis=1, inplace=True)
     return imdb
 
 def prep_bom(bom):
@@ -32,7 +33,7 @@ def prep_bom(bom):
 def merge_imdb_bom(imdb_df, bom_df):
     """This one might merge the above two sources and create a few new variables"""
     df = pd.merge(imdb_df, bom_df, on=['title', 'year'])
-    df.dropna(subset= ['domestic_gross','foreign_gross','genres'], inplace=True)
+    df.dropna(subset= ['domestic_gross','foreign_gross','genres','runtime[min]'], inplace=True)
     df['total_gross'] = df['domestic_gross'].astype(float) + df['foreign_gross'].str.replace(',', '').astype(float)
     df['foreign_gross'].replace(',','', regex=True, inplace=True)
     df['foreign_gross'] = df['foreign_gross'].astype('float64')

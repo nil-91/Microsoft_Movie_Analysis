@@ -7,6 +7,9 @@ A framework for each type of visualization is provided.
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
+import warnings
+
+warnings.filterwarnings("ignore")
 
 # Standard data manipulation packages
 import pandas as pd
@@ -47,7 +50,7 @@ def genre_vs_income(clean_df):
 def genre_vs_rating(clean_df):
     genre_vs_rating = clean_df[['genre0', 'averagerating', 'numvotes']]
       
-    fig, ax = plt.subplots(figsize=(25,6), ncols=1)
+    fig, ax = plt.subplots(figsize=(10,6), ncols=1)
     labels = list(genre_vs_rating['genre0'].unique())
     sns.boxplot(x="genre0",
                     y="averagerating",
@@ -65,11 +68,11 @@ def genre_vs_rating(clean_df):
     )
     sns.set_style(
         "darkgrid")
-    ax.set_title("Average movie rating per category", fontsize=32)
-    ax.set_xlabel("Movie category", fontsize=30)
-    ax.set_ylabel("Average rating", fontsize=30)
-    ax.set_xticklabels(labels= labels, size=25, rotation=65)
-    ax.tick_params(axis='y', labelsize=30)
+    ax.set_title("Average movie rating per category", fontsize=15)
+    ax.set_xlabel("Movie category", fontsize=15)
+    ax.set_ylabel("Average rating", fontsize=15)
+    ax.set_xticklabels(labels= labels, size=15, rotation=65)
+    ax.tick_params(axis='y', labelsize=15)
     handles, labels = ax.get_legend_handles_labels()
 
     ax.legend().remove()
@@ -77,6 +80,70 @@ def genre_vs_rating(clean_df):
 
     plt.show()
     pass
+
+def runtime_vs_income_rating(clean_df):
+    runtime_vs_gross = clean_df[['total_gross','runtime[min]']]
+    runtime_vs_rating = clean_df[['averagerating','runtime[min]']]
+    time_intervals = pd.cut(runtime_vs_gross["runtime[min]"], bins=5)
+    runtime_vs_gross["Runtime"] = time_intervals
+
+    fig, [ax1,ax2] = plt.subplots(1,2,figsize=(15,6))
+    sns.histplot(
+        data = runtime_vs_gross,
+        x="total_gross",
+        hue="Runtime",
+        palette="BuPu_r",
+        bins=10,
+        kde=False,
+        ax=ax1,
+        multiple="dodge",
+        linewidth=1,
+        edgecolor='black'
+    )
+    #sns.set_style("ticks")
+    #ax1.set_title("Total gross income vs movie runtime", fontsize=17)
+    ax1.set_xlabel("Total gross income [$]", fontsize=15)
+    ax1.set_ylabel("Number of movies", fontsize=15)
+    ax1.set_xlim([-0.5e8, np.max(runtime_vs_gross["total_gross"])])
+    ax1.xaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
+    ax1.xaxis.set_major_locator(ticker.MultipleLocator(np.max(runtime_vs_gross["total_gross"])/10))
+    ax1.xaxis.set_major_formatter(ticker.EngFormatter())
+    legend = ax1.legend(title="Runtime [min]", labels=['Very short', 'Short', 'Average', 'Long', 'Very Long'], fontsize=12)
+    legend.get_title().set_fontsize(12)
+    ax1.tick_params(axis='x', labelsize=12, rotation=65)
+    ax1.tick_params(axis='y', labelsize=15)
+    ax1.set_yscale('log', nonposy='clip')
+
+    time_intervals = pd.cut(runtime_vs_rating["runtime[min]"], bins=5)
+    runtime_vs_rating["Runtime"] = time_intervals
+
+    sns.histplot(
+        data = runtime_vs_rating,
+        x="averagerating",
+        hue="Runtime",
+        palette="BuPu_r",
+        bins=10,
+        kde=False,
+        ax=ax2,
+        multiple="dodge",
+        linewidth=1,
+        edgecolor='black'
+    )
+    #sns.set_style("ticks")
+    #ax1.set_title("Total gross income vs movie runtime", fontsize=17)
+    ax2.set_xlabel("Average rating", fontsize=15)
+    ax2.set_ylabel("Number of movies", fontsize=15)
+    legend = ax2.legend(title="Runtime [min]", labels=['Very short', 'Short', 'Average', 'Long', 'Very Long'],fontsize=12)
+    legend.get_title().set_fontsize(12)
+    ax2.set_yscale('log', nonposy='clip')
+    ax2.tick_params(axis='x', labelsize=15)
+    ax2.tick_params(axis='y', labelsize=15)
+    ax2.set_xticks([1,2,3,4,5,6,7,8,9,10])
+    plt.tight_layout()
+    plt.savefig('./images/runtime_vs_income.png', transparent = True)    
+    plt.show()     
+    pass
+
 
 def genre_vs_vote(clean_df):
     genre_vs_numvotes = clean_df[['genre0','numvotes']]

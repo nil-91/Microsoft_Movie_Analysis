@@ -10,25 +10,25 @@ This project aims to provide insights for the head of Microsoft's new movie stud
 
 ## Buisiness Problem
 
-Microsoft plans to invest on creating movies based on the type of the films that are currently successful at the box office. They may get insights on this by investigating the profit that each movie genre has made. This includes earnings from the domestic and global offices. The average rating for each movie category would also helpful to take into consideration.
+Microsoft plans to invest in creating movies based on the type of films currently successful at the box office. They may get insights into this by investigating the profit that each movie genre has made. This includes earnings from the domestic and global offices. The average rating for each movie category would also be helpful to consider.
 
 ## Data
 
-The first sourse of data for these analysis is [IMDB](https://www.imdb.com/) website which is an online database of information related to films. The data contains infromation for 73856 movies, including genres,average rating and number of votes associated with each movie. The second source of the data is [Box Office Mojo](https://www.boxofficemojo.com/) website which contains information on domestic gross and foreign gross for 3387 movies. The information on movies genres, average rating and gross income both from domestic and international sources for the movies shared between the two databases will be used for the analysis. 
+The first data source for these analyses is the [IMDB](https://www.imdb.com/), an online database of information related to films. The data contains information for 73856 movies, including genres, average rating, and number of votes associated with each movie. The second data source is the [Box Office Mojo](https://www.boxofficemojo.com/) website which contains information on domestic gross and foreign gross for 3387 movies. The information on movie genres, average rating and gross income from domestic and international sources for the movies shared between the two databases will be used for the analysis. 
 
 ## Methods
 
-This project usees descriptive analysis, including description of exsisting movies informarion for each movie genre. This provides a useful overview of some informations about movies in the past and insights for producing successsful future movies. 
+This project uses descriptive analysis, including a description of each genre's existing movie information. This provides a valuable overview of some information about movies in the past and insights for producing successful future movies.
 
 
 ## Results
 
-In terms of profit, the top three main movies geners with highest total gross income are Adventure ($ 282 M), Action ($ 247 M), and Mystery ($ 238 M). 
+In terms of profit, the top three main movie genres with the highest total gross income are Adventure ($ 282 M), Action ($ 247 M), and Mystery ($ 238 M). 
 
 ![Gross income vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_income.png)
 
 
-The top three main movie geners with highest average rating were found to be Mystery, Documentary, and Biography. However, the number of movies with Mystery to be the main genre are lower compared to the other categories and therefore, more investigation on movies with this main genre category are required. The movie generes with the lowest average rating were found to be Adventure, Comedy, and Horor.
+The top three main movie genres with the highest average ratings were found to be Mystery, Documentary, and Biography. However, the number of movies with Mystery as the primary genre is lower than the other categories. Therefore, more investigation on movies with this main genre category is required. The movie genres with the lowest average rating were Adventure, Comedy, and Horror.
 
 ![Rating vs movie genre](https://github.com/nil-91/Microsoft_Movie_Analysis/blob/main/images/genre_vs_rating.png)
 
