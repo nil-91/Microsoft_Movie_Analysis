@@ -1,20 +1,8 @@
-"""
-This module is for your data cleaning.
-It should be repeatable.
-If you are combining different data sources you might need a few different functions
-
-## Data links:
-
-
-## SUPPORT FUNCTIONS
-There can be an unlimited amount of support functions.
-Each support function should have an informative name and return the partially cleaned bit of the dataset.
-"""
 import pandas as pd
 import os 
 
 def prep_imdb(imdb):
-    """This finction reads in the data from imdb and clean it"""
+    """This function reads in the data from imdb and clean it"""
     imdb.columns = imdb.columns.str.lower().str.replace(' ', '_')
     imdb.drop(columns = ['movie_id','original_title'], inplace=True)
     imdb.rename({'primary_title':'title'}, axis=1, inplace=True)
@@ -24,14 +12,14 @@ def prep_imdb(imdb):
     return imdb
 
 def prep_bom(bom):
-    """This function might read in and clean a different data source"""
+    """This function reads in the data from bom and clean it"""
     bom.columns = bom.columns.str.lower().str.replace(' ', '_')
     bom.drop(columns = ['studio'], inplace = True)
     bom['title'] = bom['title'].str.title()
     return bom
 
 def merge_imdb_bom(imdb_df, bom_df):
-    """This one might merge the above two sources and create a few new variables"""
+    """This function reads in the data from imdb and bom and merges them based on the title and year"""
     df = pd.merge(imdb_df, bom_df, on=['title', 'year'])
     df.dropna(subset= ['domestic_gross','foreign_gross','genres','runtime[min]'], inplace=True)
     df['total_gross'] = df['domestic_gross'].astype(float) + df['foreign_gross'].str.replace(',', '').astype(float)
@@ -45,11 +33,6 @@ def merge_imdb_bom(imdb_df, bom_df):
 def full_clean(imdb, bom):
     """
     This is the one function called that will run all the support functions.
-    Assumption: 
-        - Your data files will be saved in a data folder and named "dirty_data.csv"
-        - OR you might read directly from a few urls
-        - this code is guidance, not rules
-
     :return: cleaned dataset to be passed to hypothesis testing and visualization modules.
     """
     imdb_clean = prep_imdb(imdb)
